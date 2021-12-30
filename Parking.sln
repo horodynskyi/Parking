@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parking.WEB", "Parking.WEB\Parking.WEB.csproj", "{B2A78EA3-EFF8-4DDB-BDB0-B57302EF0C60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parking.DAL", "Parking.DAL\Parking.DAL.csproj", "{1A9C6356-13A1-4529-9172-72F0642B8E88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parking.BLL", "Parking.BLL\Parking.BLL.csproj", "{36C01169-F995-46B0-AB94-825DA752AB1A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2A78EA3-EFF8-4DDB-BDB0-B57302EF0C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A78EA3-EFF8-4DDB-BDB0-B57302EF0C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A78EA3-EFF8-4DDB-BDB0-B57302EF0C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A78EA3-EFF8-4DDB-BDB0-B57302EF0C60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A9C6356-13A1-4529-9172-72F0642B8E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A9C6356-13A1-4529-9172-72F0642B8E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A9C6356-13A1-4529-9172-72F0642B8E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A9C6356-13A1-4529-9172-72F0642B8E88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C01169-F995-46B0-AB94-825DA752AB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C01169-F995-46B0-AB94-825DA752AB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C01169-F995-46B0-AB94-825DA752AB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C01169-F995-46B0-AB94-825DA752AB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
