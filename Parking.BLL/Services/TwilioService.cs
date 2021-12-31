@@ -15,9 +15,6 @@ public class TwilioService:ITwilioService
     public TwilioService(IOptions<TwilioOptions> options)
     {
         _options = options.Value;
-        
- 
-        
     }
 
     public string SendNotification(string text, string phoneNumber)
@@ -25,9 +22,14 @@ public class TwilioService:ITwilioService
         TwilioClient.Init(_options.accountSid,_options.authToken);
         var message = MessageResource.Create(
             body: text,
-            from: new Twilio.Types.PhoneNumber("+16076008470"),
+            from: _options.GetPhoneNumber(),
             to: new PhoneNumber(phoneNumber)
         );
         return message.Sid;
+    }
+
+    public bool VerifyNumber(string phoneNumber)
+    {
+        throw new NotImplementedException();
     }
 }

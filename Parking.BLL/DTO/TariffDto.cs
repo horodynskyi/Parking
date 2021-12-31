@@ -1,6 +1,6 @@
-﻿namespace Parking.DAL.Models;
+﻿namespace Parking.BLL.DTO;
 
-public class Tariff:IEntity<long>
+public class TariffDto
 {
     public long Id { get; set; }
     public string? Name { get; set; }

@@ -3,4 +3,5 @@
 public interface ITwilioService
 {
     string SendNotification(string text, string phoneNumber);
+    bool VerifyNumber(string phoneNumber);
 }

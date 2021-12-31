@@ -1,6 +1,13 @@
-﻿namespace Parking.BLL.Interfaces;
+﻿using Parking.DAL.Models;
 
-public interface IUserService
+namespace Parking.BLL.Interfaces;
+
+public interface IUserService:ITwilioService
 {
-    Task SendSms(string text, string phoneNumber);
+    void SendSms(string text, string phoneNumber);
+    Task Create(User user);
+    Task<IEnumerable<User>> Get();
+    Task<User> GetById(long id);
+    Task Update(User user);
+    Task Delete(long id);
 }

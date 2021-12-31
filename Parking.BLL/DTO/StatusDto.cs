@@ -1,6 +1,6 @@
-﻿namespace Parking.DAL.Models;
+﻿namespace Parking.BLL.DTO;
 
-public class Status:IEntity<long>
+public class StatusDto
 {
     public long Id { get; set; }
     public string? Name { get; set; }

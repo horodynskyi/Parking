@@ -1,6 +1,6 @@
 ﻿namespace Parking.DAL.Models;
 
-public interface IEntity
+public interface IEntity<TId>
 {
-    long Id { get; set; }
+    TId Id { get; set; }
 }

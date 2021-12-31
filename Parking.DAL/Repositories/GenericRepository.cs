@@ -19,12 +19,12 @@ public class GenericRepository<TEntity,TId>:IGenericRepository<TEntity,TId> wher
         await DbSet.AddAsync(entity);
     }
 
-    public async Task<IEnumerable<TEntity>> Get()
+    public virtual async Task<IEnumerable<TEntity>> Get()
     {
         return await DbSet.ToListAsync();
     }
 
-    public async Task<TEntity> GetById(TId id)
+    public virtual async Task<TEntity> GetById(TId id)
     {
         return await DbSet.FindAsync(id);
     }
@@ -32,13 +32,16 @@ public class GenericRepository<TEntity,TId>:IGenericRepository<TEntity,TId> wher
     public async Task Update(TEntity entity)
     {
         DbSet.Update(entity);
-        await Context.SaveChangesAsync();
     }
 
     public async Task Delete(TId id)
     {
         var entity = await GetById(id);
         DbSet.Remove(entity);
+    }
+
+    public async Task Complete()
+    {
         await Context.SaveChangesAsync();
     }
 }

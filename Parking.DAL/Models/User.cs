@@ -1,6 +1,6 @@
 ﻿namespace Parking.DAL.Models;
 
-public class User:IEntity
+public class User:IEntity<long>
 {
     public long Id { get; set; }
     public string? Name { get; set; }

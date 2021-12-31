@@ -11,8 +11,5 @@ public class PaymentConfiguration:IEntityTypeConfiguration<Payment>
         builder.HasKey(x => x.Id);
         builder.HasOne(x => x.RegistrId);
         builder.HasOne(x => x.TariffId);
-        builder
-            .Property(x => x.Sum)
-            .HasComputedColumnSql();
     }
 }

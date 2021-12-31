@@ -7,8 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="10.1.1" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
       <PackageReference Include="Twilio" Version="5.69.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Parking.DAL\Parking.DAL.csproj" />
     </ItemGroup>
 
 </Project>
