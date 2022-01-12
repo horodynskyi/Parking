@@ -9,7 +9,7 @@
 * Start the web api: `cd Parking.WEB `
 					 `dotnet  restore`
 					 `dotnet run`
-* Start client side server: `cd Parking.WEB `
+* Start client side server: `cd Parking.Client `
 							`dotnet  restore`
 					 		`dotnet run`			
 * When compilations are finished, in your browser open: http://localhost:8080/ and https://localhost:7193/
