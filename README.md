@@ -2,7 +2,7 @@
 ## Requirements
 
 * [dotnet SDK](https://www.microsoft.com/net/download/core) 6.0 
-* An C# editor like Visual Studio, Visual Studio Code with [Ionide](http://ionide.io/) or [JetBrains Rider](https://www.jetbrains.com/rider/)
+* An C# editor like Visual Studio, Visual Studio Code or [JetBrains Rider](https://www.jetbrains.com/rider/)
 
 ## Building and running the app
 
