@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Parking.BLL.DTO;
 using Parking.BLL.Interfaces;
-using Parking.BLL.Services;
 using Parking.DAL.Models;
 
 namespace Parking.WEB.Controllers;
@@ -12,6 +12,7 @@ public class CarController:ControllerBase
 {
     private readonly ICarService _service;
     private readonly IMapper _mapper;
+   
 
     public CarController(ICarService service, IMapper mapper)
     {
@@ -22,19 +23,37 @@ public class CarController:ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var res = _service.Get();
-        var users = _mapper.Map<IEnumerable<CarDto>>(res);
-        return Ok(res);
+        var res = await _service.Get();
+        var cars = _mapper.Map<IEnumerable<CarDto>>(res);
+        return Ok(cars);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CarUserDto dto)
+    public async Task<IActionResult> Create(CarDto carDto)
     {
-        var car = _mapper.Map<Car>(dto);
-        var user = _mapper.Map<User>(dto);
-        await _service.Create(car);
-        return Ok();
+        var car = _mapper.Map<Car>(carDto);
+        var valResult = await _service.Validation(car);
+        if (valResult.IsValid)
+        {
+            await _service.Create(car);
+            return Ok();
+        }
+        return BadRequest(valResult.Errors.Select(x => new { Error = x.ErrorMessage, Code = x.ErrorCode }).ToList());
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(long id)
+    {
+        var res = await _service.GetById(id);
+        var cars = _mapper.Map<Car>(res);
+        return Ok(cars);
+    }
 
+    [HttpPut]
+    public async Task<IActionResult> Update(CarDto carDto)
+    {
+        var car = _mapper.Map<Car>(carDto);
+        await _service.Update(car);
+        return Ok();
+    }
 }

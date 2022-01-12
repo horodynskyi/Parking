@@ -33,10 +33,7 @@ namespace Parking.WEB.Migrations
                     b.Property<long?>("CarId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("EndPark")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("StartPark")
+                    b.Property<DateTime>("StartPark")
                         .HasColumnType("datetime2");
 
                     b.Property<long?>("StatusId")
@@ -48,7 +45,7 @@ namespace Parking.WEB.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("DriveRegistries");
+                    b.ToTable("Arrivals");
                 });
 
             modelBuilder.Entity("Parking.DAL.Models.Car", b =>
@@ -80,20 +77,23 @@ namespace Parking.WEB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<long?>("RegistrIdId")
+                    b.Property<long?>("ArrivalId")
                         .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndPark")
+                        .HasColumnType("datetime2");
 
                     b.Property<float?>("Sum")
                         .HasColumnType("real");
 
-                    b.Property<long?>("TariffIdId")
+                    b.Property<long?>("TariffId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegistrIdId");
+                    b.HasIndex("ArrivalId");
 
-                    b.HasIndex("TariffIdId");
+                    b.HasIndex("TariffId");
 
                     b.ToTable("Payments");
                 });
@@ -161,12 +161,14 @@ namespace Parking.WEB.Migrations
             modelBuilder.Entity("Parking.DAL.Models.Arrival", b =>
                 {
                     b.HasOne("Parking.DAL.Models.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId");
+                        .WithMany("Arrivals")
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Parking.DAL.Models.Status", "Status")
-                        .WithMany()
-                        .HasForeignKey("StatusId");
+                        .WithMany("Arrivals")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Car");
 
@@ -176,25 +178,53 @@ namespace Parking.WEB.Migrations
             modelBuilder.Entity("Parking.DAL.Models.Car", b =>
                 {
                     b.HasOne("Parking.DAL.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Cars")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Parking.DAL.Models.Payment", b =>
                 {
-                    b.HasOne("Parking.DAL.Models.Arrival", "RegistrId")
-                        .WithMany()
-                        .HasForeignKey("RegistrIdId");
+                    b.HasOne("Parking.DAL.Models.Arrival", "Arrival")
+                        .WithMany("Payments")
+                        .HasForeignKey("ArrivalId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Parking.DAL.Models.Tariff", "TariffId")
-                        .WithMany()
-                        .HasForeignKey("TariffIdId");
+                    b.HasOne("Parking.DAL.Models.Tariff", "Tariff")
+                        .WithMany("Payments")
+                        .HasForeignKey("TariffId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("RegistrId");
+                    b.Navigation("Arrival");
 
-                    b.Navigation("TariffId");
+                    b.Navigation("Tariff");
+                });
+
+            modelBuilder.Entity("Parking.DAL.Models.Arrival", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("Parking.DAL.Models.Car", b =>
+                {
+                    b.Navigation("Arrivals");
+                });
+
+            modelBuilder.Entity("Parking.DAL.Models.Status", b =>
+                {
+                    b.Navigation("Arrivals");
+                });
+
+            modelBuilder.Entity("Parking.DAL.Models.Tariff", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("Parking.DAL.Models.User", b =>
+                {
+                    b.Navigation("Cars");
                 });
 #pragma warning restore 612, 618
         }

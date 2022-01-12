@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FluentValidation;
+using Microsoft.Extensions.Options;
 using Parking.BLL.Interfaces;
 using Parking.BLL.Options;
 using Parking.DAL.Interface;
@@ -6,16 +7,20 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class UserService:TwilioService,IUserService
+public class UserService:BaseService<User>,IUserService
 {
     private readonly IUserRepository _repository;
-    public UserService(IOptions<TwilioOptions> options, IUserRepository repository) : base(options)
+    private readonly ITwilioService _twilioService;
+    
+    public UserService(IOptions<TwilioOptions> options, IUserRepository repository, ITwilioService twilioService,IValidator<User> validator) 
+        : base(validator)
     {
         _repository = repository;
+        _twilioService = twilioService;
     }
     public void SendSms(string text, string phoneNumber)
     {
-        SendNotification(text, phoneNumber);
+        _twilioService.SendNotification(text, phoneNumber);
     }
 
     public async Task Create(User user)

@@ -2,7 +2,7 @@
 
 namespace Parking.BLL.Interfaces;
 
-public interface IPaymentService:ITwilioService
+public interface IPaymentService
 {
     void SendSms(string text, string phoneNumber);
     Task Create(Payment payment);

@@ -19,8 +19,6 @@ public class CarRepository:GenericRepository<Car,long>, ICarRepository
     }
     public override async Task<Car?> GetById(long id)
     {
-        return await DbSet
-            .Include(x => x.User)
-            .FirstOrDefaultAsync(x =>x.Id ==id);
+        return await DbSet.FirstOrDefaultAsync(x =>x.Id ==id);
     }
 }

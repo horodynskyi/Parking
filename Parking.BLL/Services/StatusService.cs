@@ -1,14 +1,15 @@
-﻿using Parking.BLL.Interfaces;
+﻿using FluentValidation;
+using Parking.BLL.Interfaces;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class StatusService:IStatusService
+public class StatusService:BaseService<Status>,IStatusService
 {
     private readonly IStatusRepository _repository;
 
-    public StatusService(IStatusRepository repository)
+    public StatusService(IStatusRepository repository,IValidator<Status> validator):base(validator)
     {
         _repository = repository;
     }

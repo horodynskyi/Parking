@@ -11,9 +11,10 @@ namespace Parking.BLL.Services;
 public class TwilioService:ITwilioService
 {
     private readonly TwilioOptions _options;
-   
-    public TwilioService(IOptions<TwilioOptions> options)
+    private HttpClient _client;
+    public TwilioService(IOptions<TwilioOptions> options, HttpClient client)
     {
+        _client = client;
         _options = options.Value;
     }
 
@@ -28,8 +29,17 @@ public class TwilioService:ITwilioService
         return message.Sid;
     }
 
-    public bool VerifyNumber(string phoneNumber)
+    public async Task<HttpResponseMessage> VerifyNumber(string phoneNumber)
     {
-        throw new NotImplementedException();
+        _client.DefaultRequestHeaders.Add("X-Authy-API-Key", _options.authToken);
+        var requestContent = new FormUrlEncodedContent(new[] {
+            new KeyValuePair<string, string>("via", "sms"),
+            new KeyValuePair<string, string>("phone_number", "0958550449"),
+            new KeyValuePair<string, string>("country_code", "38"),
+        });
+        HttpResponseMessage response = await _client.PostAsync(
+            "https://api.authy.com/protected/json/phones/verification/start",
+            requestContent);
+        return response;
     }
 }

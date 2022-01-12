@@ -1,0 +1,39 @@
+﻿@using Parking.Client.ViewModels
+@using Parking.Client.Data
+@inherits LayoutComponentBase
+@inject ICarViewModel _carViewModel
+@inject IUserViewModel _userViewModel
+<PageTitle>Parking.Client</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu/>
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @if (Cars!=null){
+            @foreach (var item in Cars)
+                        {
+                            <p>@item.CarNumber</p>
+                        }
+            }
+            @*// @Body*@
+        </article>
+    </main>
+</div>
+@code{
+    protected override async Task OnInitializedAsync()
+    {
+        await _carViewModel.LoadData();
+        Cars = (await _carViewModel.Get()).ToList();
+        Cars = (await _carViewModel.Get()).ToList();
+    }
+
+    List<Car> Cars { get; set; }
+    List<User> Users { get; set; }
+}

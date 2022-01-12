@@ -9,5 +9,6 @@ public class TariffConfiguration:IEntityTypeConfiguration<Tariff>
     public void Configure(EntityTypeBuilder<Tariff> builder)
     {
         builder.HasKey(x => x.Id);
+      
     }
 }

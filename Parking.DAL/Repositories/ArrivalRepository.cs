@@ -17,6 +17,11 @@ public class ArrivalRepository:GenericRepository<Arrival,long>, IArrivalReposito
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
+    public async Task SetEndDate(long id)
+    {
+     
+    }
+
     public override async Task<IEnumerable<Arrival>> Get()
     {
         return await DbSet

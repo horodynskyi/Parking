@@ -2,7 +2,7 @@
 
 namespace Parking.BLL.Interfaces;
 
-public interface IUserService:ITwilioService
+public interface IUserService:IBaseService<User>
 {
     void SendSms(string text, string phoneNumber);
     Task Create(User user);

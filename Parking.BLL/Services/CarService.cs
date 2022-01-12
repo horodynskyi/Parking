@@ -1,4 +1,6 @@
-﻿using Parking.BLL.Interfaces;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Parking.BLL.Interfaces;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
@@ -7,26 +9,23 @@ namespace Parking.BLL.Services;
 public class CarService:ICarService
 {
     private readonly ICarRepository _carRepository;
-    private readonly IUserRepository _userRepository;
+    private readonly IValidator<Car> _validator;
 
-    public CarService(ICarRepository repository, IUserRepository userRepository)
+    public CarService(ICarRepository repository, IValidator<Car> validator)
     {
         _carRepository = repository;
-        _userRepository = userRepository;
+        _validator = validator;
     }
 
     public async Task Create(Car user)
     {
         await _carRepository.Create(user);
+        await _carRepository.Complete();
     }
 
     public async Task Create(Car car, User user)
     {
-        var res = await _userRepository.GetById(user.Id);
-        if (res == null)
-        {
-            
-        }
+      
     }
 
     public async Task<IEnumerable<Car>> Get()
@@ -47,6 +46,10 @@ public class CarService:ICarService
     public async Task Delete(long id)
     {
         await _carRepository.Delete(id);
+    }
+    public async Task<ValidationResult> Validation(Car car)
+    {
+        return await _validator.ValidateAsync(car);
     }
     
 }

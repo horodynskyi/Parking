@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Parking.WEB.Migrations
 {
-    public partial class ChangedNameOfFields : Migration
+    public partial class Innit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,33 +68,35 @@ namespace Parking.WEB.Migrations
                         name: "FK_Cars_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "DriveRegistries",
+                name: "Arrivals",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CarId = table.Column<long>(type: "bigint", nullable: true),
-                    StartPark = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndPark = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StartPark = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StatusId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DriveRegistries", x => x.Id);
+                    table.PrimaryKey("PK_Arrivals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DriveRegistries_Cars_CarId",
+                        name: "FK_Arrivals_Cars_CarId",
                         column: x => x.CarId,
                         principalTable: "Cars",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_DriveRegistries_Statuses_StatusId",
+                        name: "FK_Arrivals_Statuses_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,24 +105,37 @@ namespace Parking.WEB.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TariffIdId = table.Column<long>(type: "bigint", nullable: true),
-                    RegistrIdId = table.Column<long>(type: "bigint", nullable: true),
+                    TariffId = table.Column<long>(type: "bigint", nullable: true),
+                    ArrivalId = table.Column<long>(type: "bigint", nullable: true),
+                    EndPark = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sum = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_DriveRegistries_RegistrIdId",
-                        column: x => x.RegistrIdId,
-                        principalTable: "DriveRegistries",
-                        principalColumn: "Id");
+                        name: "FK_Payments_Arrivals_ArrivalId",
+                        column: x => x.ArrivalId,
+                        principalTable: "Arrivals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Payments_Tariffs_TariffIdId",
-                        column: x => x.TariffIdId,
+                        name: "FK_Payments_Tariffs_TariffId",
+                        column: x => x.TariffId,
                         principalTable: "Tariffs",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Arrivals_CarId",
+                table: "Arrivals",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Arrivals_StatusId",
+                table: "Arrivals",
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cars_UserId",
@@ -128,24 +143,14 @@ namespace Parking.WEB.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DriveRegistries_CarId",
-                table: "DriveRegistries",
-                column: "CarId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DriveRegistries_StatusId",
-                table: "DriveRegistries",
-                column: "StatusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payments_RegistrIdId",
+                name: "IX_Payments_ArrivalId",
                 table: "Payments",
-                column: "RegistrIdId");
+                column: "ArrivalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_TariffIdId",
+                name: "IX_Payments_TariffId",
                 table: "Payments",
-                column: "TariffIdId");
+                column: "TariffId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -154,7 +159,7 @@ namespace Parking.WEB.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "DriveRegistries");
+                name: "Arrivals");
 
             migrationBuilder.DropTable(
                 name: "Tariffs");

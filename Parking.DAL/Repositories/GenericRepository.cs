@@ -17,6 +17,7 @@ public class GenericRepository<TEntity,TId>:IGenericRepository<TEntity,TId> wher
     public async Task Create(TEntity entity)
     {
         await DbSet.AddAsync(entity);
+        //await Context.SaveChangesAsync();
     }
 
     public virtual async Task<IEnumerable<TEntity>> Get()

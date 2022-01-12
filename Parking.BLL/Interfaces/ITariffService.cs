@@ -2,7 +2,7 @@
 
 namespace Parking.BLL.Interfaces;
 
-public interface ITariffService
+public interface ITariffService:IBaseService<Tariff>
 {
     Task Create(Tariff tariff);
     Task<IEnumerable<Tariff>> Get();

@@ -22,4 +22,5 @@ public class SmsController:ControllerBase
        var msg = _service.SendNotification("Го в доту", "+380508727999");
        return msg;
     }
+    
 }

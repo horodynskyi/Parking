@@ -6,17 +6,19 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class PaymentService:TwilioService,IPaymentService
+public class PaymentService:IPaymentService
 {
     private readonly IPaymentRepository _repository;
-    public PaymentService(IOptions<TwilioOptions> options, IPaymentRepository repository) : base(options)
+    private readonly ITwilioService _twilioService;
+    public PaymentService(IOptions<TwilioOptions> options, IPaymentRepository repository, ITwilioService twilioService)
     {
         _repository = repository;
+        _twilioService = twilioService;
     }
 
     public void SendSms(string text, string phoneNumber)
     {
-        SendNotification(text, phoneNumber);
+        _twilioService.SendNotification(text, phoneNumber);
     }
 
     public async Task Create(Payment payment)

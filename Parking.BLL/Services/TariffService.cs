@@ -1,14 +1,15 @@
-﻿using Parking.BLL.Interfaces;
+﻿using FluentValidation;
+using Parking.BLL.Interfaces;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class TariffService:ITariffService
+public class TariffService:BaseService<Tariff>,ITariffService
 {
     private readonly ITariffRepository _repository;
 
-    public TariffService(ITariffRepository repository)
+    public TariffService(ITariffRepository repository,IValidator<Tariff> validator):base(validator)
     {
         _repository = repository;
     }
@@ -16,6 +17,7 @@ public class TariffService:ITariffService
     public async Task Create(Tariff tariff)
     {
         await _repository.Create(tariff);
+        await _repository.Complete();
     }
 
     public async Task<IEnumerable<Tariff>> Get()
