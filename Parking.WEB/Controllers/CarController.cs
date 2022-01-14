@@ -3,6 +3,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Parking.BLL.DTO;
 using Parking.BLL.Interfaces;
+using Parking.BLL.Params;
 using Parking.DAL.Models;
 
 namespace Parking.WEB.Controllers;
@@ -21,9 +22,9 @@ public class CarController:ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] CarParams parameters)
     {
-        var res = await _service.Get();
+        var res = await _service.Get(parameters);
         var cars = _mapper.Map<IEnumerable<CarDto>>(res);
         return Ok(cars);
     }

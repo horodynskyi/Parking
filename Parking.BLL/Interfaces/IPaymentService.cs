@@ -1,4 +1,5 @@
-﻿using Parking.DAL.Models;
+﻿using Parking.BLL.Params;
+using Parking.DAL.Models;
 
 namespace Parking.BLL.Interfaces;
 
@@ -10,4 +11,5 @@ public interface IPaymentService
     Task<Payment> GetById(long id);
     Task Update(Payment payment);
     Task Delete(long id);
+    Task<IEnumerable<Payment>> Get(PaymentParams arrivalParams);
 }

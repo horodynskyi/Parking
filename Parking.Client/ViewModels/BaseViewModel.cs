@@ -4,30 +4,48 @@ namespace Parking.Client.ViewModels;
 
 public class BaseViewModel<T>:IBaseViewModel<T>
 {  
-    protected List<T>? _cars;
     protected HttpClient _httpClient;
     protected Routes Routes { get; set; }
 
     public BaseViewModel(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        
     }
-    protected int CurrentPage { get; set; } = 1;
+    public int CurrentPage { get; set; } = 1;
     protected int PageSize { get; set; } = 5;
+    protected string OrderField { get; set; } = "id";
     protected IEnumerable<T> Entities { get; set; }
     public async Task LoadData()
     {
-        Entities = (await _httpClient.GetFromJsonAsync<List<T>>(Routes.GetRoute("Get"))).ToList();
+        var res = (await _httpClient.GetFromJsonAsync<List<T>>(String.Format(Routes.GetRoute("Get"),CurrentPage,PageSize,OrderField))).ToList();
+        if (res.Any())
+        {
+            Entities = res;
+        }
+        else {Entities = new List<T>();
+            CurrentPage--;
+        }
     }
     public async Task<IEnumerable<T>> Get()
     {
-        if (Entities != null) return Entities.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+        if (Entities != null) return Entities.ToList();
         else
         {
             await LoadData();
-            return Entities.Skip((PageSize - 1) * PageSize).Take(PageSize).ToList();
+            return Entities.ToList();
         }
+    }
+    public async Task<IEnumerable<T>> NextPage()
+    {
+        CurrentPage++;
+        await LoadData();
+        return await Get();
+    }
+    public async Task<IEnumerable<T>> PrevPage()
+    {
+        CurrentPage = CurrentPage <= 1 ? CurrentPage:CurrentPage-1;
+        await LoadData();
+        return await Get();
     }
 
     public async Task Create(T entity)

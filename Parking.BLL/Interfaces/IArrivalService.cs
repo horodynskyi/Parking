@@ -1,8 +1,9 @@
-﻿using Parking.DAL.Models;
+﻿using Parking.BLL.Params;
+using Parking.DAL.Models;
 
 namespace Parking.BLL.Interfaces;
 
-public interface IArrivalService:IBaseService<Arrival>
+public interface IArrivalService : IBaseService<Arrival>
 {
     Task Create(Arrival arrival);
     Task<IEnumerable<Arrival>> Get();

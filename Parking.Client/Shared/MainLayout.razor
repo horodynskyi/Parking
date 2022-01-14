@@ -20,8 +20,13 @@
             @foreach (var item in Cars)
                         {
                             <p>@item.CarNumber</p>
+                            <p>@item.Id</p>
+                            <p>@_carViewModel.CurrentPage</p>
                         }
+               
             }
+             <button onclick="@NextPage">Next page</button>
+             <button onclick="@PrevPage">Pver page</button>
             @*// @Body*@
         </article>
     </main>
@@ -31,9 +36,19 @@
     {
         await _carViewModel.LoadData();
         Cars = (await _carViewModel.Get()).ToList();
-        Cars = (await _carViewModel.Get()).ToList();
+    }
+
+    public async Task NextPage()
+    {
+        Cars = (await _carViewModel.NextPage()).ToList();
+        await OnInitializedAsync();
+    }
+
+    public async Task PrevPage()
+    {
+        Cars = (await _carViewModel.PrevPage()).ToList();
+        await OnInitializedAsync();
     }
 
     List<Car> Cars { get; set; }
-    List<User> Users { get; set; }
 }

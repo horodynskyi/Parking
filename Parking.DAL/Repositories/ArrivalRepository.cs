@@ -12,6 +12,7 @@ public class ArrivalRepository:GenericRepository<Arrival,long>, IArrivalReposito
 
     public override async Task<Arrival> GetById(long id)
     {
+        
         return await DbSet
             .Include(x => x.Car)
             .FirstOrDefaultAsync(x => x.Id == id);

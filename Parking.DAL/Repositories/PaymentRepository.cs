@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
@@ -26,6 +27,11 @@ public class PaymentRepository:GenericRepository<Payment,long>, IPaymentReposito
             .Where(x => x.EndPark >= start && x.EndPark <= end)
             .ToListAsync();
        
+    }
+
+    public async Task<IEnumerable<Payment>> FindByCondition(Expression<Func<Payment, bool>> expression)
+    {
+        return DbSet.Where(expression).ToList();
     }
 
     public override async Task<IEnumerable<Payment>> Get()

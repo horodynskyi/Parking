@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.BLL.Options;
+using Parking.BLL.Params;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
@@ -44,5 +46,11 @@ public class PaymentService:IPaymentService
     public async Task Delete(long id)
     {
         await _repository.Delete(id);
+    }
+
+    public async Task<IEnumerable<Payment>> Get(PaymentParams paymentParams)
+    {
+        var payments = await _repository.FindByCondition(x => x.Sum >= paymentParams.MinSum && x.Sum <= paymentParams.MaxSum && x.EndPark.Year <= paymentParams.maxDate);
+        return PageHelper<Payment>.ToPagedList(payments,paymentParams);
     }
 }

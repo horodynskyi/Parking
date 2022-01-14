@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
+using Parking.BLL.Params;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
 
@@ -28,9 +30,10 @@ public class CarService:ICarService
       
     }
 
-    public async Task<IEnumerable<Car>> Get()
+    public async Task<IEnumerable<Car>> Get(CarParams carParams)
     {
-        return await _carRepository.Get();
+        var cars = await _carRepository.Get();
+        return PageHelper<Car>.ToPagedList(cars,carParams);
     }
 
     public async Task<Car> GetById(long id)
