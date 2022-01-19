@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
@@ -9,7 +10,7 @@ public class StatusService:BaseService<Status>,IStatusService
 {
     private readonly IStatusRepository _repository;
 
-    public StatusService(IStatusRepository repository,IValidator<Status> validator):base(validator)
+    public StatusService(IStatusRepository repository,IValidator<Status> validator,ISortHelper<Status> sortHelper):base(validator,sortHelper)
     {
         _repository = repository;
     }
@@ -17,6 +18,7 @@ public class StatusService:BaseService<Status>,IStatusService
     public async Task Create(Status status)
     {
         await _repository.Create(status);
+        await _repository.Complete();
     }
 
     public async Task<IEnumerable<Status>> Get()

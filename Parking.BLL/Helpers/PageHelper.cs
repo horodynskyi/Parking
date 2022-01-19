@@ -22,8 +22,7 @@ public class PageHelper<T>:List<T>
     public static PageHelper<T> ToPagedList(IEnumerable<T> source, QueryStringParameters parameters)
     {
         var count = source.Count();
-        
-        var items = source.Skip((parameters.PageNumber - 1) * parameters.PageSize).Take(parameters.PageSize).ToList();
+       var items = source.Take(((parameters.PageNumber - 1) * parameters.PageSize)..parameters.PageSize).ToList();
 
         return new PageHelper<T>(items, count, parameters);
     }

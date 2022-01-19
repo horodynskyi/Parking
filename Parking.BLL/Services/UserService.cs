@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.Options;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.BLL.Options;
 using Parking.DAL.Interface;
@@ -12,8 +13,8 @@ public class UserService:BaseService<User>,IUserService
     private readonly IUserRepository _repository;
     private readonly ITwilioService _twilioService;
     
-    public UserService(IOptions<TwilioOptions> options, IUserRepository repository, ITwilioService twilioService,IValidator<User> validator) 
-        : base(validator)
+    public UserService(IOptions<TwilioOptions> options, IUserRepository repository, ITwilioService twilioService,IValidator<User> validator,ISortHelper<User> sortHelper) 
+        : base(validator,sortHelper)
     {
         _repository = repository;
         _twilioService = twilioService;

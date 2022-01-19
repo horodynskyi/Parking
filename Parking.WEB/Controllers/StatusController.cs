@@ -22,7 +22,7 @@ public class StatusController:ControllerBase
     public async Task<IActionResult> Get()
     {
         var res = await _service.Get();
-        var statuses = _mapper.Map<IEnumerable<Status>>(res);
+        var statuses = _mapper.Map<IEnumerable<StatusDto>>(res);
         return Ok(statuses);
     }
 

@@ -1,0 +1,105 @@
+﻿@typeparam TEntity
+@using System.Net.Http.Json
+@using System.Reflection
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Mvc
+@using Parking.Client.Data
+@using Parking.Client.ViewModels
+@inject HttpClient _httpClient
+
+@if (ListData ==null)
+{
+	<text>Loading...</text>
+	
+}
+else if (ListData.Count == 0)
+{
+    <text>No Records Found.</text>
+    
+}
+else
+{
+	<h2 class="table_title">Table Title</h2>
+	<div class="table-wrapper">
+		<table class="fl-table">
+			<thead>
+			<tr>
+				
+				 @foreach (var field in ListData[0].GetType().GetProperties())
+				{
+					if (field.Name.EndsWith("Id") && field.Name.Length > 2)
+					{
+						continue;
+					}
+					if (!field.PropertyType.IsClass || (field.GetValue(ListData[0],null) is string) )
+					{
+						<th>@field.Name</th>
+					}
+					else
+					{
+						var propFields = field.GetValue(ListData[0], null).GetType().GetProperties();
+						foreach (var propField in propFields)
+						{
+							if (!propField.Name.Equals("Id"))
+							{
+								<th>@propField.Name</th>
+							}
+						}
+					}
+				}
+				<th>Functional bt</th>
+			</tr>
+			</thead>
+			<tbody>
+			@foreach (var entity in ListData)
+			{
+				<tr>
+					@foreach (var field in entity.GetType().GetProperties())
+					{
+						if (field.PropertyType.IsClass && !(field.GetValue(entity,null) is string))
+						{
+							var refEntity = field.GetValue(entity, null);
+							foreach (var refProp in refEntity.GetType().GetProperties())
+							{
+								if (refProp.Name.EndsWith("Id")) continue;
+								<td>@refProp.GetValue(refEntity,null)</td>
+							}
+						}
+						else if (!(field.Name.EndsWith("Id") && field.Name.Length > 2))
+						{
+							<td>@field.GetValue(entity, null)</td>
+						}
+					}
+					<td>
+						<div class="table_d">
+							<div class="functional_wrapper">
+								<div class="fa fa-plus-square-o"></div>
+								<div class="fa fa-trash-o"></div>
+								<div class="fa fa-pencil-square-o"></div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+			</tbody>
+
+			<tbody></tbody>
+		</table>
+	</div>
+}
+@code {
+
+	[Parameter]
+	public IBaseViewModel<TEntity> ViewModel { get; set; }
+
+	[Parameter]
+	public string Page { get; set; }
+
+	public List<TEntity> ListData { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		ListData = (await ViewModel.Get()).ToList();
+	}
+
+}

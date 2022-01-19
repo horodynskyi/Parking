@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using FluentValidation;
+using Microsoft.Extensions.Options;
 using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.BLL.Options;
@@ -8,14 +9,18 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class PaymentService:IPaymentService
+public class PaymentService:BaseService<Payment>,IPaymentService
 {
     private readonly IPaymentRepository _repository;
     private readonly ITwilioService _twilioService;
-    public PaymentService(IOptions<TwilioOptions> options, IPaymentRepository repository, ITwilioService twilioService)
+    
+    
+    public PaymentService(IOptions<TwilioOptions> options, IPaymentRepository repository, 
+        ITwilioService twilioService, ISortHelper<Payment> sortHelper,IValidator<Payment> validator) : base(validator,sortHelper)
     {
         _repository = repository;
         _twilioService = twilioService;
+
     }
 
     public void SendSms(string text, string phoneNumber)
@@ -26,11 +31,13 @@ public class PaymentService:IPaymentService
     public async Task Create(Payment payment)
     {
         await _repository.Create(payment);
+        await _repository.Complete();
     }
 
     public async Task<IEnumerable<Payment>> Get()
     {
         return await _repository.Get();
+        
     }
 
     public async Task<Payment> GetById(long id)
@@ -50,7 +57,8 @@ public class PaymentService:IPaymentService
 
     public async Task<IEnumerable<Payment>> Get(PaymentParams paymentParams)
     {
-        var payments = await _repository.FindByCondition(x => x.Sum >= paymentParams.MinSum && x.Sum <= paymentParams.MaxSum && x.EndPark.Year <= paymentParams.maxDate);
-        return PageHelper<Payment>.ToPagedList(payments,paymentParams);
+        var payments = await paymentParams.FiltrExpr(_repository);
+        var sorted = SortHelper.ApplySort(payments.AsQueryable(),paymentParams.OrderBy,paymentParams.Asending);
+        return PageHelper<Payment>.ToPagedList(sorted,paymentParams);
     }
 }

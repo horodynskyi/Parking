@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.BLL.Params;
 using Parking.DAL.Interface;
@@ -9,8 +10,8 @@ namespace Parking.BLL.Services;
 public class ArrivalService :BaseService<Arrival>,IArrivalService
 {
     private readonly IArrivalRepository _repository;
-
-    public ArrivalService(IValidator<Arrival> validator, IArrivalRepository repository) : base(validator)
+  
+    public ArrivalService(IValidator<Arrival> validator, IArrivalRepository repository,ISortHelper<Arrival> sortHelper) : base(validator,sortHelper)
     {
         _repository = repository;
     }

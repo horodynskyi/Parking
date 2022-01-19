@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Parking.WEB.Migrations
+namespace Parking.DAL.Migrations
 {
-    public partial class Innit : Migration
+    public partial class ChangeDateFormat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,7 +78,7 @@ namespace Parking.WEB.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CarId = table.Column<long>(type: "bigint", nullable: true),
-                    StartPark = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartPark = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StatusId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -107,7 +106,7 @@ namespace Parking.WEB.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TariffId = table.Column<long>(type: "bigint", nullable: true),
                     ArrivalId = table.Column<long>(type: "bigint", nullable: true),
-                    EndPark = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndPark = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sum = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>

@@ -5,7 +5,7 @@ public abstract class QueryStringParameters
     const int maxPageSize = 50;
     public int PageNumber { get; set; } = 1;
 
-    private int _pageSize = 10;
+    private int _pageSize = 50;
     public int PageSize
     {
         get
@@ -17,5 +17,7 @@ public abstract class QueryStringParameters
             _pageSize = (value > maxPageSize) ? maxPageSize : value;
         }
     }
-    public string OrderBy { get; set; }
+
+    public string OrderBy { get; set; } = "id";
+    public bool Asending { get; set; }
 }

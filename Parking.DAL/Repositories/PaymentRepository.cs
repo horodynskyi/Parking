@@ -24,7 +24,7 @@ public class PaymentRepository:GenericRepository<Payment,long>, IPaymentReposito
         return  await DbSet
             .Include(x => x.Arrival)
             .Include(x => x.Tariff)
-            .Where(x => x.EndPark >= start && x.EndPark <= end)
+            .Where(x => DateTime.Parse(x.EndPark) >= start && DateTime.Parse(x.EndPark) <= end)
             .ToListAsync();
        
     }

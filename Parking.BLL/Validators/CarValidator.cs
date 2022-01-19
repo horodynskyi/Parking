@@ -19,7 +19,7 @@ public class CarValidator:AbstractValidator<Car>
         
         RuleFor(x => x.CarNumber)
             .NotEmpty().WithMessage("Registration car number must be not null")
-            .Matches("^[A-Z]{2}[0-9]{4}[A-Z]{2}")
+            .Matches("^[A-Z]{2}[0-9]{4}[A-Z]{2}$")
             .WithMessage("Car registration number is wrong");
     }
     private async Task<bool> IsExist(Car car, CancellationToken token) 

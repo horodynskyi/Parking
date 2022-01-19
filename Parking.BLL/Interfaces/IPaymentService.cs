@@ -3,7 +3,7 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Interfaces;
 
-public interface IPaymentService
+public interface IPaymentService:IBaseService<Payment>
 {
     void SendSms(string text, string phoneNumber);
     Task Create(Payment payment);

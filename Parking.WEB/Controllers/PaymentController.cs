@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Parking.BLL.DTO;
 using Parking.BLL.Interfaces;
+using Parking.BLL.Params;
 using Parking.DAL.Models;
 
 namespace Parking.WEB.Controllers;
@@ -19,10 +20,10 @@ public class PaymentController:ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] PaymentParams paymentParams)
     {
-        var res = await _service.Get();
-        var payments = _mapper.Map<IEnumerable<Payment>>(res);
+        var res = await _service.Get(paymentParams);
+        var payments = _mapper.Map<IEnumerable<PaymentDto>>(res);
         return Ok(payments);
     }
 
@@ -38,7 +39,7 @@ public class PaymentController:ControllerBase
     public async Task<IActionResult> GetById(long id)
     {
         var res = await _service.GetById(id);
-        var payments = _mapper.Map<Payment>(res);
+        var payments = _mapper.Map<PaymentDto>(res);
         return Ok(payments);
     }
 

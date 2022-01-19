@@ -6,4 +6,5 @@ public class Payment
     public int TariffId { get; set;}
     public int? ArrivalId { get; set;  }
     public float? Sum { get; set; }
+    
 }

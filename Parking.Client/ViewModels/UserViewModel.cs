@@ -9,6 +9,7 @@ public class UserViewModel:BaseViewModel<User>,IUserViewModel
         Routes = new Routes();
         Routes.AddRoute("Get","https://localhost:7164/api/user");
         Routes.AddRoute("Update","https://localhost:7164/api/user");
+        Routes.AddRoute("GetById","https://localhost:7164/api/user/{0}");
         Routes.AddRoute("Create","https://localhost:7164/api/user");
     }
 }

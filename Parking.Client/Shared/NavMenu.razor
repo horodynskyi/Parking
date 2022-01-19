@@ -1,31 +1,63 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Parking.Client</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿<nav class="main-menu">
+			<ul>
+				<li>
+					<a href="http://justinfarrow.com">
+						<i class="fa fa-home fa-2x"></i>
+						<span class="nav-text"> Dashboard </span>
+					</a>
+				</li>
+				<li class="has-subnav">
+					<a href="#">
+						<i class="fa fa-laptop fa-2x"></i>
+						<span class="nav-text"> Stars Components </span>
+					</a>
+				</li>
+				<li class="has-subnav">
+					<a href="#">
+						<i class="fa fa-list fa-2x"></i>
+						<span class="nav-text"> Forms </span>
+					</a>
+				</li>
+				<li class="has-subnav">
+					<a href="#">
+						<i class="fa fa-folder-open fa-2x"></i>
+						<span class="nav-text"> Pages </span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-bar-chart-o fa-2x"></i>
+						<span class="nav-text"> Graphs and Statistics </span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-font fa-2x"></i>
+						<span class="nav-text"> Quotes </span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-table fa-2x"></i>
+						<span class="nav-text"> Tables </span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-map-marker fa-2x"></i>
+						<span class="nav-text"> Maps </span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-info fa-2x"></i>
+						<span class="nav-text"> Documentation </span>
+					</a>
+				</li>
+			</ul>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
+	
+		</nav>
 
 @code {
     private bool collapseNavMenu = true;

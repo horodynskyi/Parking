@@ -4,7 +4,7 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Interfaces;
 
-public interface ICarService
+public interface ICarService:IBaseService<Car>
 {
     Task Create(Car car);
     Task Create(Car car,User user);

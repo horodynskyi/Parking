@@ -1,0 +1,10 @@
+﻿@page "/cars"
+@using Parking.Client.Data
+@using Parking.Client.ViewModels
+@using Microsoft.Extensions.DependencyInjection
+@inject ICarViewModel _carViewModel
+<h3>CarPage</h3>
+<Table TEntity=Car Page="car" ViewModel=_carViewModel></Table>
+@code {
+    
+}

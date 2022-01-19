@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Parking.DAL;
 
 #nullable disable
 
-namespace Parking.WEB.Migrations
+namespace Parking.DAL.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220104165501_Innit")]
-    partial class Innit
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +33,9 @@ namespace Parking.WEB.Migrations
                     b.Property<long?>("CarId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("StartPark")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("StartPark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("StatusId")
                         .HasColumnType("bigint");
@@ -82,8 +81,9 @@ namespace Parking.WEB.Migrations
                     b.Property<long?>("ArrivalId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("EndPark")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("EndPark")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float?>("Sum")
                         .HasColumnType("real");

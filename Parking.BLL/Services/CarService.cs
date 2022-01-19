@@ -8,15 +8,13 @@ using Parking.DAL.Models;
 
 namespace Parking.BLL.Services;
 
-public class CarService:ICarService
+public class CarService:BaseService<Car>,ICarService
 {
     private readonly ICarRepository _carRepository;
-    private readonly IValidator<Car> _validator;
-
-    public CarService(ICarRepository repository, IValidator<Car> validator)
+   
+    public CarService(ICarRepository repository, IValidator<Car> validator,ISortHelper<Car> sortHelper) : base(validator,sortHelper)
     {
         _carRepository = repository;
-        _validator = validator;
     }
 
     public async Task Create(Car user)
@@ -49,10 +47,6 @@ public class CarService:ICarService
     public async Task Delete(long id)
     {
         await _carRepository.Delete(id);
-    }
-    public async Task<ValidationResult> Validation(Car car)
-    {
-        return await _validator.ValidateAsync(car);
     }
     
 }

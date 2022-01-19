@@ -22,7 +22,7 @@ public class ArrivalController:ControllerBase
     public async Task<IActionResult> Get()
     {
         var res = await _service.Get();
-        var arrivals = _mapper.Map<IEnumerable<Arrival>>(res);
+        var arrivals = _mapper.Map<IEnumerable<ArrivalDto>>(res);
         return Ok(arrivals);
     }
 

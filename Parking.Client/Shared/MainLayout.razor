@@ -16,23 +16,13 @@
         </div>
 
         <article class="content px-4">
-            @if (Cars!=null){
-            @foreach (var item in Cars)
-                        {
-                            <p>@item.CarNumber</p>
-                            <p>@item.Id</p>
-                            <p>@_carViewModel.CurrentPage</p>
-                        }
-               
-            }
-             <button onclick="@NextPage">Next page</button>
-             <button onclick="@PrevPage">Pver page</button>
-            @*// @Body*@
+            <div class="area"></div>
+            @Body
         </article>
     </main>
 </div>
 @code{
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
         await _carViewModel.LoadData();
         Cars = (await _carViewModel.Get()).ToList();
@@ -50,5 +40,5 @@
         await OnInitializedAsync();
     }
 
-    List<Car> Cars { get; set; }
+    List<Car> Cars { get; set; }*/
 }

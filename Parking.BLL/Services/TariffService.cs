@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Parking.BLL.Helpers;
 using Parking.BLL.Interfaces;
 using Parking.DAL.Interface;
 using Parking.DAL.Models;
@@ -9,7 +10,7 @@ public class TariffService:BaseService<Tariff>,ITariffService
 {
     private readonly ITariffRepository _repository;
 
-    public TariffService(ITariffRepository repository,IValidator<Tariff> validator):base(validator)
+    public TariffService(ITariffRepository repository,IValidator<Tariff> validator,ISortHelper<Tariff> sortHelper) :base(validator,sortHelper)
     {
         _repository = repository;
     }
